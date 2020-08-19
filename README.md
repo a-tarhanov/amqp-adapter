@@ -176,5 +176,10 @@ AMQP::sendJson($message, $routing_key, $exchange);
 For listen event you can add to your `EventServiceProvider`:
 
 ```
-Event::listen('event.some', fn($payload) => (new ExampleJob($payload))->handle());
+public function boot()
+{
+    parent::boot();
+
+    Event::listen('event.some', fn($payload) => (new ExampleJob($payload))->handle());
+}
 ```
