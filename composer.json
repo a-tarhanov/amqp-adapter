@@ -1,0 +1,22 @@
+{
+  "name": "a-tarhanov/amqp-adapter",
+  "type": "library",
+  "description": "AMQP adapter based on php-amqplib/php-amqplib",
+  "homepage": "https://github.com/a-tarhanov/amqp-adapter",
+  "authors": [
+    {
+      "name": "Alexander Tarkhanov",
+      "email": "starhanov@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.4",
+    "php-amqplib/php-amqplib": "^2.11",
+    "laravel/lumen-framework": "^7.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "ATarhanov\\AmqpAdapter\\": "src/"
+    }
+  }
+}
