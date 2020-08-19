@@ -2,7 +2,9 @@
   "name": "a-tarhanov/amqp-adapter",
   "type": "library",
   "description": "AMQP adapter based on php-amqplib/php-amqplib",
+  "keywords": ["amqp", "rabbitmq"],
   "homepage": "https://github.com/a-tarhanov/amqp-adapter",
+  "license": "MIT",
   "authors": [
     {
       "name": "Alexander Tarkhanov",
