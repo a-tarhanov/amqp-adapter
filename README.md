@@ -172,3 +172,9 @@ or for send array as json, for example:
 
 AMQP::sendJson($message, $routing_key, $exchange);
 ```
+
+For listen event you can add to your `EventServiceProvider`:
+
+```
+Event::listen('event.come', fn($payload) => (new ExampleJob($payload))->handle());
+```
