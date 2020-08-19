@@ -11,7 +11,7 @@ class AMQPExchangeDeleteCommand extends Command
                             {name?}
                             {--unused=1}';
 
-    protected $description = 'AMQP Exchange Declare';
+    protected $description = 'AMQP Exchange Delete';
 
     public function handle()
     {
