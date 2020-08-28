@@ -2,8 +2,6 @@
 
 namespace ATarhanov\AMQPAdapter;
 
-use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Log;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Message\AMQPMessage;
@@ -242,47 +240,11 @@ class AMQPAdapter
     /**
      * @param string|null $queue
      * @param bool $no_ack
+     * @param $callback
      * @throws \ErrorException
      */
-    public function listen($queue = null, $no_ack = false)
+    public function listen($queue = null, $no_ack = false, $callback = null)
     {
-        $callback = function ($msg) use ($no_ack) {
-            $properties = $msg->get_properties();
-            $event = $msg->delivery_info['routing_key'];
-            $channel = $msg->delivery_info['channel'];
-            $delivery_tag = $msg->delivery_info['delivery_tag'];
-            $body = $msg->body;
-
-            if (data_get($properties, 'content_type') === 'application/json') {
-                $body = json_decode($body, true);
-            }
-
-            try {
-                Event::dispatch($event, $body);
-
-                if (!$no_ack) {
-                    $channel->basic_ack($delivery_tag);
-                }
-
-                Log::info('Successfully dispatch', [
-                    'event' => $event,
-                    'body' => $body,
-                    'properties' => $properties,
-                ]);
-            } catch (\Exception $e) {
-                if (!$no_ack) {
-                    $channel->basic_cancel($delivery_tag);
-                }
-
-                Log::error('Failed dispatch', [
-                    'event' => $event,
-                    'body' => $body,
-                    'properties' => $properties,
-                    'error' => $e->getMessage(),
-                ]);
-            }
-        };
-
         $this->basicQos($this->prefetch_count);
         $this->basicConsume($queue, $no_ack, $callback);
 
